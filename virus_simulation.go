@@ -16,31 +16,31 @@ type individuo struct {
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	tamanho := 10
+	tamanhoPopulacao := 10
 
-	populacao := make([][]individuo, tamanho)
-	linha := make([]individuo, tamanho)
+	populacao := make([][]individuo, tamanhoPopulacao)
+	linha := make([]individuo, tamanhoPopulacao)
 
-	for i := 0; i < tamanho; i++ {
+	for i := 0; i < tamanhoPopulacao; i++ {
 		linha[i] = individuo{"O", false, 0}
 
 	}
 
 	// populacao inicial, todos saudaveis mas nao imunizados
-	for i := 0; i < tamanho; i++ {
+	for i := 0; i < tamanhoPopulacao; i++ {
 		populacao[i] = linha
 
 	}
 
 	// gera-se um individuo aleatorio infectado
-	linhaInfectado := rand.Intn(tamanho)
-	colunaInfectado := rand.Intn(tamanho)
+	linhaInfectado := rand.Intn(tamanhoPopulacao)
+	colunaInfectado := rand.Intn(tamanhoPopulacao)
 	chanceContaminacao := rand.Intn(100) + 1
 
 	infectado := individuo{"X", false, chanceContaminacao}
-	linhaInfectadoAux := make([]individuo, tamanho)
+	linhaInfectadoAux := make([]individuo, tamanhoPopulacao)
 
-	for i := 0; i < tamanho; i++ {
+	for i := 0; i < tamanhoPopulacao; i++ {
 		if (i != colunaInfectado){
 			linhaInfectadoAux[i] = individuo{"O", false, 0}
 
@@ -55,6 +55,11 @@ func main() {
 
 	fmt.Printf("linha = %v coluna = %v chance = %v\n", linhaInfectado, colunaInfectado, chanceContaminacao)
 
+	imprimePopulacao(populacao...)
+
+}
+
+func imprimePopulacao(populacao... []individuo) {
 	for _, linha := range populacao {
 		for _, individuo := range linha {
 			fmt.Printf("%v ", individuo.situacao)
