@@ -20,7 +20,11 @@ func main() {
 
 	populacao := iniciaPopulacao() // inicia populacao com todos nao infectados
 	imprimePopulacao(populacao...)
-	populacao = iniciaInfectado(populacao...) // gera-se um individuo aleatorio infectado
+	populacao, linhaInfectado, colunaInfectado := iniciaInfectado(populacao...) // gera-se um individuo aleatorio infectado
+	imprimePopulacao(populacao...)
+
+	infectaPopulacao(linhaInfectado, colunaInfectado, "X", "O", populacao...)
+
 	imprimePopulacao(populacao...)
 
 }
@@ -63,7 +67,7 @@ func iniciaPopulacao() ([][]individuo) {
 
 }
 
-func iniciaInfectado(populacao... []individuo) ([][]individuo){
+func iniciaInfectado(populacao... []individuo) ([][]individuo, int, int){
 	linhaInfectado := rand.Intn(tamanhoPopulacao) + 1
 	colunaInfectado := rand.Intn(tamanhoPopulacao) + 1
 	chanceContaminacao := rand.Intn(100) + 1
@@ -90,7 +94,25 @@ func iniciaInfectado(populacao... []individuo) ([][]individuo){
 
 	populacao[linhaInfectado] = linhaInfectadoAux
 
-	return populacao
+	return populacao, linhaInfectado, colunaInfectado
+
+}
+
+func infectaPopulacao(linhaInfectado, colunaInfectado int, situacaoAnterior, situacaoAtual string, populacao... []individuo) {
+	if((linhaInfectado > 0) && (linhaInfectado <= tamanhoPopulacao) && (colunaInfectado > 0) && (colunaInfectado <= tamanhoPopulacao) && 
+	(populacao[linhaInfectado][colunaInfectado].situacao == situacaoAnterior) && (populacao[linhaInfectado][colunaInfectado].situacao != situacaoAtual)){
+		populacao[linhaInfectado][colunaInfectado].situacao = "X"
+
+		infectaPopulacao(linhaInfectado, colunaInfectado + 1, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado + 1, colunaInfectado + 1, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado + 1, colunaInfectado, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado + 1, colunaInfectado - 1, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado, colunaInfectado - 1, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado - 1, colunaInfectado - 1, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado - 1, colunaInfectado, situacaoAtual, situacaoAnterior, populacao...)
+		infectaPopulacao(linhaInfectado - 1, colunaInfectado + 1, situacaoAtual, situacaoAnterior, populacao...)
+
+	}
 
 }
 
