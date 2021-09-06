@@ -16,26 +16,24 @@ type individuo struct {
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	fmt.Println("numero =", rand.Intn(100))
-	fmt.Println("numero =", rand.Intn(100))
-
 	tamanho := 10
 
-	matriz := make([][]string, tamanho)
-	linha := make([]string, tamanho)
+	populacao := make([][]individuo, tamanho)
+	linha := make([]individuo, tamanho)
 
 	for i := 0; i < tamanho; i++ {
-		linha[i] = "O"
+		linha[i] = individuo{"O", false, 0}
 
 	}
 
 	for i := 0; i < tamanho; i++ {
-		matriz[i] = linha
+		populacao[i] = linha
+
 	}
 
-	for _, sliceLinha := range matriz {
-		for _, valor := range sliceLinha {
-			fmt.Printf("%v ", valor)
+	for _, linha := range populacao {
+		for _, individuo := range linha {
+			fmt.Printf("%v ", individuo.situacao)
 
 		}
 
