@@ -22,22 +22,40 @@ func main() {
 	imprimePopulacao(populacao...)
 	populacao = iniciaInfectado(populacao...) // gera-se um individuo aleatorio infectado
 	imprimePopulacao(populacao...)
-	
 
 }
 
 func iniciaPopulacao() ([][]individuo) {
-	populacao := make([][]individuo, tamanhoPopulacao)
-	linha := make([]individuo, tamanhoPopulacao)
+	populacao := make([][]individuo, tamanhoPopulacao + 2)
+	linhaAux1 := make([]individuo, tamanhoPopulacao + 2) // F para todos os infectados
+	linhaAux2 := make([]individuo, tamanhoPopulacao + 2) // F para os extremos e O para o restante
+	
 
-	for i := 0; i < tamanhoPopulacao; i++ {
-		linha[i] = individuo{"O", false, 0}
+	for i := 0; i < tamanhoPopulacao + 2; i++ {
+		linhaAux1[i] = individuo{"F", false, 0}
+
+	}
+
+	for i := 0; i < tamanhoPopulacao + 2; i++ {
+		if((i == 0) || (i == tamanhoPopulacao + 1)){
+			linhaAux2[i] = individuo{"F", false, 0}
+
+		}else{
+			linhaAux2[i] = individuo{"O", false, 0}
+
+		}
 
 	}
 
 	// populacao inicial, todos saudaveis mas nao imunizados
-	for i := 0; i < tamanhoPopulacao; i++ {
-		populacao[i] = linha
+	for i := 0; i < tamanhoPopulacao + 2; i++ {
+		if((i == 0) || (i == tamanhoPopulacao + 1)){
+			populacao[i] = linhaAux1
+
+		}else{
+			populacao[i] = linhaAux2
+
+		}
 
 	}
 
@@ -46,16 +64,22 @@ func iniciaPopulacao() ([][]individuo) {
 }
 
 func iniciaInfectado(populacao... []individuo) ([][]individuo){
-	linhaInfectado := rand.Intn(tamanhoPopulacao)
-	colunaInfectado := rand.Intn(tamanhoPopulacao)
+	linhaInfectado := rand.Intn(tamanhoPopulacao) + 1
+	colunaInfectado := rand.Intn(tamanhoPopulacao) + 1
 	chanceContaminacao := rand.Intn(100) + 1
 
 	infectado := individuo{"X", false, chanceContaminacao}
-	linhaInfectadoAux := make([]individuo, tamanhoPopulacao)
+	linhaInfectadoAux := make([]individuo, tamanhoPopulacao + 2)
 
-	for i := 0; i < tamanhoPopulacao; i++ {
+	for i := 0; i < tamanhoPopulacao + 2; i++ {
 		if (i != colunaInfectado){
-			linhaInfectadoAux[i] = individuo{"O", false, 0}
+			if((i == 0) || (i == tamanhoPopulacao + 1)){
+				linhaInfectadoAux[i] = individuo{"F", false, 0}
+	
+			}else{
+				linhaInfectadoAux[i] = individuo{"O", false, 0}
+	
+			}
 
 		}else{
 			linhaInfectadoAux[i] = infectado
@@ -73,7 +97,10 @@ func iniciaInfectado(populacao... []individuo) ([][]individuo){
 func imprimePopulacao(populacao... []individuo) {
 	for _, linha := range populacao {
 		for _, individuo := range linha {
-			fmt.Printf("%v ", individuo.situacao)
+			if(individuo.situacao != "F"){
+				fmt.Printf("%v ", individuo.situacao)
+
+			}
 
 		}
 
