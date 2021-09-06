@@ -13,24 +13,12 @@ type individuo struct {
 
 }
 
+var tamanhoPopulacao = 10
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	tamanhoPopulacao := 10
-
-	populacao := make([][]individuo, tamanhoPopulacao)
-	linha := make([]individuo, tamanhoPopulacao)
-
-	for i := 0; i < tamanhoPopulacao; i++ {
-		linha[i] = individuo{"O", false, 0}
-
-	}
-
-	// populacao inicial, todos saudaveis mas nao imunizados
-	for i := 0; i < tamanhoPopulacao; i++ {
-		populacao[i] = linha
-
-	}
+	populacao := iniciaPopulacao()
 
 	// gera-se um individuo aleatorio infectado
 	linhaInfectado := rand.Intn(tamanhoPopulacao)
@@ -56,6 +44,25 @@ func main() {
 	fmt.Printf("linha = %v coluna = %v chance = %v\n", linhaInfectado, colunaInfectado, chanceContaminacao)
 
 	imprimePopulacao(populacao...)
+
+}
+
+func iniciaPopulacao() ([][]individuo) {
+	populacao := make([][]individuo, tamanhoPopulacao)
+	linha := make([]individuo, tamanhoPopulacao)
+
+	for i := 0; i < tamanhoPopulacao; i++ {
+		linha[i] = individuo{"O", false, 0}
+
+	}
+
+	// populacao inicial, todos saudaveis mas nao imunizados
+	for i := 0; i < tamanhoPopulacao; i++ {
+		populacao[i] = linha
+
+	}
+
+	return populacao
 
 }
 
