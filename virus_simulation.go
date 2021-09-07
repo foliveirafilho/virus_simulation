@@ -38,8 +38,6 @@ func main() {
 
 func iniciaPopulacao() ([][]individuo) {
 	populacao := make([][]individuo, tamanhoPopulacao + 2)
-	/*linhaAux1 := make([]individuo, tamanhoPopulacao + 2) // F para todos os infectados
-	linhaAux2 := make([]individuo, tamanhoPopulacao + 2) // F para os extremos e O para o restante*/
 	
 	for i := 0; i < tamanhoPopulacao + 2; i++ {
 		linha := make([]individuo, tamanhoPopulacao + 2)
@@ -59,34 +57,6 @@ func iniciaPopulacao() ([][]individuo) {
 
 	}
 
-	/*for i := 0; i < tamanhoPopulacao + 2; i++ {
-		linhaAux1[i] = individuo{"F", 0}
-
-	}
-
-	for i := 0; i < tamanhoPopulacao + 2; i++ {
-		if((i == 0) || (i == tamanhoPopulacao + 1)){
-			linhaAux2[i] = individuo{"F", 0}
-
-		}else{
-			linhaAux2[i] = individuo{"O", 0}
-
-		}
-
-	}
-
-	// populacao inicial, todos saudaveis mas com chance de serem contaminados
-	for i := 0; i < tamanhoPopulacao + 2; i++ {
-		if((i == 0) || (i == tamanhoPopulacao + 1)){
-			populacao[i] = linhaAux1
-
-		}else{
-			populacao[i] = linhaAux2
-
-		}
-
-	}*/
-
 	return populacao
 
 }
@@ -100,28 +70,6 @@ func iniciaInfectado(populacao... []individuo) ([][]individuo, int, int){
 
 	populacao[linhaInfectado][colunaInfectado].situacao = "X"
 	populacao[linhaInfectado][colunaInfectado].chanceContaminacao = chanceContaminacao
-
-	/*infectado := individuo{"X", chanceContaminacao}
-	linhaInfectadoAux := make([]individuo, tamanhoPopulacao + 2)
-
-	for i := 0; i < tamanhoPopulacao + 2; i++ {
-		if (i != colunaInfectado){
-			if((i == 0) || (i == tamanhoPopulacao + 1)){
-				linhaInfectadoAux[i] = individuo{"F", 0}
-	
-			}else{
-				linhaInfectadoAux[i] = individuo{"O", 0}
-	
-			}
-
-		}else{
-			linhaInfectadoAux[i] = infectado
-
-		}
-
-	}
-
-	populacao[linhaInfectado] = linhaInfectadoAux*/
 
 	fmt.Println("Primeiro caso do vírus identificado! Chance de contaminação:", chanceContaminacao, "%")
 	time.Sleep(3 * time.Second)
