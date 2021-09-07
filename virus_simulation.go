@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"time"
 	"github.com/inancgumus/screen"
+
 )
 
 type individuo struct {
@@ -23,8 +24,6 @@ func main() {
 
 	populacao, linhaInfectado, colunaInfectado := iniciaInfectado(populacao...) // gera-se um individuo aleatorio infectado
 	imprimePopulacao(populacao...)
-
-	fmt.Printf("linha = %v coluna = %v\n", linhaInfectado, colunaInfectado)
 
 	limpaTela()
 	populacao = infectaPopulacao(linhaInfectado, colunaInfectado, populacao...)
@@ -128,12 +127,13 @@ func iniciaInfectado(populacao... []individuo) ([][]individuo, int, int){
 func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []individuo) ([][]individuo){
 	if((linhaInfectado > 0) && (linhaInfectado <= tamanhoPopulacao) && (colunaInfectado > 0) && (colunaInfectado <= tamanhoPopulacao)){
 		chanceDeSerInfectado := rand.Intn(100) + 1
-		fmt.Printf("ser = %v passar = %v\n", chanceDeSerInfectado, populacao[linhaInfectado][colunaInfectado].chanceContaminacao)
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado][colunaInfectado + 1].situacao == "O")){
 			populacao[linhaInfectado][colunaInfectado + 1].situacao = "X"
 			populacao[linhaInfectado][colunaInfectado + 1].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado, colunaInfectado + 1)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado, colunaInfectado + 1, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -145,6 +145,8 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 			populacao[linhaInfectado + 1][colunaInfectado + 1].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado + 1, colunaInfectado + 1)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado + 1, colunaInfectado + 1, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -152,10 +154,13 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 
 		chanceDeSerInfectado = rand.Intn(100) + 1
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado + 1][colunaInfectado].situacao == "O")){
+			
 			populacao[linhaInfectado + 1][colunaInfectado].situacao = "X"
 			populacao[linhaInfectado + 1][colunaInfectado].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado + 1, colunaInfectado)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado + 1, colunaInfectado, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -163,10 +168,13 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 
 		chanceDeSerInfectado = rand.Intn(100) + 1
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado + 1][colunaInfectado - 1].situacao == "O")){
+			
 			populacao[linhaInfectado + 1][colunaInfectado - 1].situacao = "X"
 			populacao[linhaInfectado + 1][colunaInfectado - 1].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado + 1, colunaInfectado - 1)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado + 1, colunaInfectado - 1, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -174,10 +182,13 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 
 		chanceDeSerInfectado = rand.Intn(100) + 1
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado][colunaInfectado - 1].situacao == "O")){
+			
 			populacao[linhaInfectado][colunaInfectado - 1].situacao = "X"
 			populacao[linhaInfectado][colunaInfectado - 1].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado, colunaInfectado - 1)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado, colunaInfectado - 1, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -185,10 +196,13 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 
 		chanceDeSerInfectado = rand.Intn(100) + 1
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado - 1][colunaInfectado - 1].situacao == "O")){
+			
 			populacao[linhaInfectado - 1][colunaInfectado - 1].situacao = "X"
 			populacao[linhaInfectado - 1][colunaInfectado - 1].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado - 1, colunaInfectado - 1)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado - 1, colunaInfectado - 1, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -196,10 +210,13 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 
 		chanceDeSerInfectado = rand.Intn(100) + 1
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado - 1][colunaInfectado].situacao == "O")){
+			
 			populacao[linhaInfectado - 1][colunaInfectado].situacao = "X"
 			populacao[linhaInfectado - 1][colunaInfectado].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado - 1, colunaInfectado)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado - 1, colunaInfectado, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -207,10 +224,13 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 
 		chanceDeSerInfectado = rand.Intn(100) + 1
 		if((chanceDeSerInfectado <= populacao[linhaInfectado][colunaInfectado].chanceContaminacao) && (populacao[linhaInfectado - 1][colunaInfectado + 1].situacao == "O")){
+			
 			populacao[linhaInfectado - 1][colunaInfectado + 1].situacao = "X"
 			populacao[linhaInfectado - 1][colunaInfectado + 1].chanceContaminacao = rand.Intn(100) + 1
 
 			imprimePopulacao(populacao...)
+			fmt.Printf("O indivíduo (%v,%v) infectou o indivíduo (%v, %v)!\n", linhaInfectado, colunaInfectado, linhaInfectado - 1, colunaInfectado + 1)
+			time.Sleep(2 * time.Second)
 			populacao = infectaPopulacao(linhaInfectado - 1, colunaInfectado + 1, populacao...)
 			imprimePopulacao(populacao...)
 
@@ -228,6 +248,7 @@ func infectaPopulacao(linhaInfectado, colunaInfectado int, populacao... []indivi
 func imprimePopulacao(populacao... []individuo) {
 	limpaTela()
 
+	fmt.Println("Acompanhe o desenvolvimento do vírus em tempo real:")
 	for _, linha := range populacao {
 		for _, individuo := range linha {
 			if(individuo.situacao != "F"){
